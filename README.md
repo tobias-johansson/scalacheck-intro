@@ -1,6 +1,10 @@
 # ScalaCheck Intro
 
-Launch presentation in browser
+View presentation
+
+http://htmlpreview.github.io/?https://github.com/tobias-johansson/scalacheck-intro/blob/master/presentation/presentation.html
+
+Launch presentation in browser locally
 ```
 > cd presentation
 > ./presentation.sh
