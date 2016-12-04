@@ -23,6 +23,7 @@ Tobias Johansson
 - Demo
 	- Finding bugs in functional code
 	- Finding bugs in a stateful code
+- Discussion
 
 ---
 
@@ -34,7 +35,7 @@ class: center, middle
 ---
 
 
-## Tests
+## Normal tests
 
 - Define **specific** input values
 - Execute code under test
@@ -54,12 +55,13 @@ class: center, middle
 
 ???
 - Using ScalaTest
+- input: -1, CUT: Math.abs, output: 1
 
 --
 
 ### Abstract
 
-*Describes an example of what the code under test does*
+*Describes one example of what the code under test does*
 
 ---
 
@@ -101,19 +103,23 @@ class: center, middle
 
 ---
 
+class: center, middle
+
 # ScalaCheck
+
+---
+
+## ScalaCheck
 
 --
 
 - Stems from
-  - QuickCheck (haskell)
-	- QuickCheck (erlang)
+  - QuickCheck (haskell, erlang)
 - Implemented in many languages
 
----
+--
 
-
-## Dependencies
+## Used here
 ```scala
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.13.4" % "test"
 ```
@@ -125,7 +131,7 @@ libraryDependencies += "org.scalatest"  %% "scalatest"  % "3.0.0"  % "test"
 ---
 
 
-## Basic properties
+## Properties
 ```scala
 "Some test" in check { (a: List[Int], b: List[Int]) =>
 
@@ -133,6 +139,10 @@ libraryDependencies += "org.scalatest"  %% "scalatest"  % "3.0.0"  % "test"
 
 }
 ```
+
+???
+- `check` is ScalaTest syntax
+
 --
 is a short form of
 ```scala
@@ -145,6 +155,10 @@ is a short form of
 	}
 }
 ```
+???
+- `forAll` is ScalaCheck syntax
+- `forAll` is a central function
+
 ---
 
 
@@ -154,7 +168,7 @@ def forAll [T: Arbitrary] (f: T => Boolean): Prop
 ```
 ???
 - Pseudo signature of `forAll`
-- Works for any T: Arbitraty (has implicit instance)
+- Works for any `T: Arbitrary` (has implicit instance)
 --
 Predefined instances
 ```scala
@@ -212,14 +226,18 @@ def forAll [T] (g: Gen[T]) (f: T => Boolean): Prop
 ---
 
 ## Composing generators
+???
+`Gen` contains lots of factories/combinators
+
 --
 
 ```scala
-val letters = Gen.oneOf('A', 'B', 'C', 'D', 'E', 'F')
-val digits = Gen.choose('0', '9')
-val hexChars = Gen.oneOf(letters, digits)
+val letters    = Gen.oneOf('A', 'B', 'C', 'D', 'E', 'F')
+val digits     = Gen.choose('0', '9')
+val hexChars   = Gen.oneOf(letters, digits)
 val hexStrings = Gen.listOf(hexChars).map(_.mkString)
 ```
+
 --
 Used in property
 ```scala
@@ -245,11 +263,24 @@ val addresses = for {
 } yield Address(street, number)
 
 val persons = for {
-  name <- Gen.alphaStr
-  age <- Gen.choose(0, 120)
+  name    <- Gen.alphaStr
+  age     <- Gen.choose(0, 120)
   address <- addresses
 } yield Person(name, age, address)
 ```
+
+---
+
+class: center, middle
+
+# Demo
+
+???
+- Implement MyJsonTest
+  - Increase minSuccessful
+	- Discuss Shrinking
+- Implement ListBufferTest
+- Implement StorageServiceTest
 
 ---
 
@@ -257,7 +288,8 @@ val persons = for {
 
 ### Non-determinism (flaky tests)
 - A failure is a failure, and should be handled
-- Failing inputs logged -> create "example tests"
+--
+- Failing inputs are logged -> create "example tests"
 - Possible to set the rng seed (don't know how; not well documented it seems)
 
 ---
