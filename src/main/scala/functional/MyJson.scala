@@ -6,4 +6,5 @@ object MyJson {
 
   def toJson(r: Report): String =
     s"""{"value":${r.value},"message":"${r.message}"}"""
+
 }

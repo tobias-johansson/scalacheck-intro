@@ -38,11 +38,11 @@ class StorageServiceTest extends FreeSpec with Matchers with Checkers {
 
       // Then
       //
+      type State = (Access, Int)
+
       sealed trait Access
       case object Granted extends Access
       case object Denied  extends Access
-
-      type State = (Access, Int)
 
       val (_, count) =
         actions.foldLeft[State]((Denied, 0)) {
