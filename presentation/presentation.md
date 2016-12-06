@@ -222,12 +222,12 @@ def forAll [T] (g: Gen[T]) (f: T => Boolean): Prop
 ```
 ???
 - Arbitrary is basically just a special name for certain Generators
-
+- **Demo** in REPL
 ---
 
 ## Composing generators
 ???
-`Gen` contains lots of factories/combinators
+- `Gen` contains lots of factories/combinators
 
 --
 
@@ -245,7 +245,8 @@ Used in property
 	forAll(hexStrings) { s: String => ??? }
 }
 ```
-
+???
+- **Demo** in REPL
 ---
 
 ## Composing generators
@@ -276,29 +277,57 @@ class: center, middle
 # Demo
 
 ???
-- Implement MyJsonTest
+- Implement `MyJsonTest`
   - Increase minSuccessful
-	- Discuss Shrinking
-- Implement ListBufferTest
-- Implement StorageServiceTest
+	- Discuss **Shrinking**
+- Implement `ListBufferTest`
+- Cut'n'paste StorageServiceTest
 
 ---
 
 ## Discussion
 
 ### Non-determinism (flaky tests)
+- Tests might fail long after changes are made
+--
+
 - A failure is a failure, and should be handled
 --
-- Failing inputs are logged -> create "example tests"
-- Possible to set the rng seed (don't know how; not well documented it seems)
+
+- Failing inputs are logged
+  - Create normal tests when fixing
+--
+
+- Further study
+	- Possible to log/set the rng seed
+	  - Repeat a complete run deterministically
+  	- (Don't know how; not well documented it seems)
 
 ---
 
 ## Discussion
 
-- How to know when to use it?
-  - Trade-off: A bit harder to define property tests instead of example tests
-    - Find simple properties
-    - Probably easiest for library-like code
-    - Can create constant/choice generators if too for hard to generate certain parts
-	- Many projects have a combination of "example tests" and "property tests"
+### When to use?
+--
+
+- Trade-off
+  - A bit harder to define property tests
+	- Greater benefit
+--
+
+- Most projects combine *example tests* and *property tests*
+--
+
+- Find simple properties
+- Start with library(-like) code
+--
+
+- Can create constant/choice generators
+
+---
+
+class: center, middle
+
+# Thank you!
+
+Questions?

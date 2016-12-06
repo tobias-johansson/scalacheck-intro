@@ -18,12 +18,7 @@
 			}
       code {
 				line-height: 100% !important;
-				/*background: #f3f3f7 !important;*/
 				background: #eeeef0 !important;
-				/*padding-left: 1em !important;*/
-			}
-			.hljs {
-
 			}
 			.remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
 			.inverse {
@@ -42,10 +37,8 @@
 		<script>
 			var slideshow = remark.create({
 				sourceUrl: 'presentation.md',
-				highlightStyle: 'github'
-				// highlightStyle: 'solarized-light'
-        // highlightStyle: 'tomorrow'
-				// highlightStyle: 'zenburn'
+				highlightStyle: 'github',
+				countIncrementalSlides: false
       });
 		</script>
 	</body>
